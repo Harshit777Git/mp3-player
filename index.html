@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 My Music Player 🎶</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins:wght@300;400;700&display=swap">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 450px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .player img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 0 25px cyan;
+        }
+        
+        .controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 10px;
+            transition: 0.3s ease;
+        }
+        
+        .controls button:hover {
+            color: cyan;
+            transform: scale(1.2);
+        }
+        
+        .playlist {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .playlist ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .playlist li {
+            padding: 10px;
+            cursor: pointer;
+            color: cyan;
+            font-weight: bold;
+        }
+        
+        .playlist li:hover {
+            color: yellow;
+            text-shadow: 0 0 10px yellow;
+        }
+        
+        .dark-theme {
+            background: linear-gradient(to right, #000000, #434343);
+            color: cyan;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i>🎧 HASH'S Personal Music Hub 🎼</i></h1>
+        <div class="player">
+            <img id="cover" src="BG .png" alt="Album Cover">
+            <h2 id="song-title">Song Name</h2>
+            <p id="artist">Artist</p>
+            <audio id="audioPlayer" controls>
+                <source id="audioSource" src="music/MC STN - KHUJA MAT.mp3" type="audio/mpeg">
+            </audio>
+            <div class="controls">
+                <button onclick="prevSong()"><i class="fas fa-step-backward"></i></button>
+                <button onclick="playPause()" id="playPause"><i class="fas fa-play"></i></button>
+                <button onclick="nextSong()"><i class="fas fa-step-forward"></i></button>
+            </div>
+        </div>
+        <div class="playlist">
+            <h3>🎶 Playlist 🎶</h3>
+            <ul id="playlist">
+                <li onclick="playSelectedSong(0)">KHUJA MAT</li>
+                <li onclick="playSelectedSong(1)">WATA</li>
+                <li onclick="playSelectedSong(2)">ASTAGFIRULLAH</li>
+                <li onclick="playSelectedSong(3)">KHAJWE VICHAAR</li>
+                <li onclick="playSelectedSong(4)">YEDE KI CHADAR FT. DEAF</li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <script>
+        const songs = ["MC STN - KHUJA MAT.mp3", "MC STN - WATA.mp3", "MC STN - ASTAGFIRULLAH.mp3", "MC STΔN - KHAJWE VICHAAR.mp3","MC STΔN - LOWKEY.mp3","MC STΔN FT. DEAF - YEDE KI CHADAR.mp3"  ];
+        let currentSongIndex = 0;
+        const audioPlayer = document.getElementById("audioPlayer");
+        const audioSource = document.getElementById("audioSource");
+        const songTitle = document.getElementById("song-title");
+        const playPauseBtn = document.getElementById("playPause");
+        
+        function loadSong(index) {
+            audioSource.src = "music/" + songs[index];
+            songTitle.textContent = "Playing: " + songs[index];
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+        
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+        }
+        
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+        }
+        
+        function playPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        function playSelectedSong(index) {
+            currentSongIndex = index;
+            loadSong(currentSongIndex);
+        }
+        
+        loadSong(currentSongIndex);
+    </script>
+</body>
+</html>
